@@ -186,7 +186,7 @@ const EditCategory = () => {
                                       {errors.banner}
                                     </small>
                                   )}
-                                  <img src={imageUrl} alt="" width={150} height={150}/>
+                                  <img src={imageUrl} className="mt-2" alt="" width={150} height={150}/>
                                 </div>
 
                                 <button

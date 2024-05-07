@@ -70,12 +70,12 @@ const EditProduct = () => {
 
   // show hide modal
 
-  // const imageBaseUrl = "http://localhost:3500/uploads/";
+   const imageBaseUrl = "http://localhost:3500/api/uploads/";
   // const imageBaseUrl = "http://165.22.222.184/api/uploads/";
   
   // const imageBaseUrl = "https://64.227.162.145/api/uploads/";
 
-  const imageBaseUrl = `${process.env.REACT_APP_API_URL}/api/uploads/`;
+  // const imageBaseUrl = `${process.env.REACT_APP_API_URL}/api/uploads/`;
 
   
 

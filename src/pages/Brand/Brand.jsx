@@ -58,7 +58,7 @@ const Brand = () => {
       fetchBrand()
        navigate("/brand");
       // window.location.reload();
-      toast.success('Category deleted successfully!')
+      toast.success('Brand deleted successfully!')
       // setSuccessful(true);
    
     })

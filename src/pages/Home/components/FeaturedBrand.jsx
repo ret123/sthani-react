@@ -6,25 +6,19 @@ import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faUpDownLeftRight } from "@fortawesome/free-solid-svg-icons";
 import CustomFileInput from "./CustomFileInput";
-import EditFileInput from "./EditFileInput";
+import MultiSelectDropdown from "../../../components/MultiSelectDropDown";
 
-const SlideShowWidget = ({
+const FeaturedBrand = ({
   values,
   setFieldValue,
   onDragEnd,
   showButton,
-  destinationOptions,
+  productOptions,
   handleAddItem,
-  handleSelectIdChange,
-  handleDestinationChange,
+  handleFeaturedBrandChange,
+  featuredBrandProducts,
   brands,
 }) => {
-
-  // const imageBaseUrl = "http://localhost:3500/api/uploads/";
-
-    
-  const imageBaseUrl = `${process.env.REACT_APP_API_URL}/api/uploads/`;
-  
   return (
     <DragDropContext
       onDragEnd={(result) => onDragEnd(result, values, setFieldValue)}
@@ -35,7 +29,7 @@ const SlideShowWidget = ({
             <FieldArray name="items">
               {({ push, remove }) => (
                 <div>
-                  <h5>Slideshow Items:</h5>
+                  <h5>Featured Brand Items:</h5>
                   {values.items?.map((item, index) => (
                     <Draggable
                       key={index}
@@ -56,31 +50,42 @@ const SlideShowWidget = ({
                                   <div className="row">
                                     <div className="col-md-6 mb-2">
                                       <label className="form-label">
-                                        Image:
+                                        Brand:
                                       </label>
                                       <Field
-                                        component={values.items[index].image ? EditFileInput : CustomFileInput}
-                                        className="form-control"
-                                        name={`items.${index}.image`}
-                                      />
-                                     {values.items[index].image && <img
-                                    src={imageBaseUrl + values.items[index].image}
-                                    alt=""
-                                    width={80}
-                                    height={80}
-                                  />}
+                                        as="select"
+                                        className="form-select"
+                                        name={`items.${index}.featuredBrand`}
+                                        required
+                                        onChange={(e) => {
+                                            handleFeaturedBrandChange(e);
+                                            setFieldValue(
+                                              `items.${index}.featuredBrand`,
+                                              e.target.value
+                                            );
+                                          }}
+                                      >
+                                        <option value="">Select Brand</option>
+                                        {brands.map((brand, brandIndex) => (
+                                          <option
+                                            key={brandIndex}
+                                            value={brand.id}
+                                          >
+                                            {brand.name}
+                                          </option>
+                                        ))}
+                                      </Field>
                                     </div>
                                     <div className="col-md-6 mb-2">
                                       <label className="form-label">
-                                        Description:
+                                        Product:
                                       </label>
-                                      <Field
-                                        as="textarea"
-                                        type="text"
-                                        className="form-control"
-                                        name={`items.${index}.description`}
+                                      <MultiSelectDropdown
+                                        name={`items.${index}.product`}
+                                        options={featuredBrandProducts}
                                       />
                                     </div>
+                                   
                                   </div>
                                   <div className="row">
                                     <div className="col-md-6 mb-2">
@@ -108,79 +113,16 @@ const SlideShowWidget = ({
                                     </div>
                                     <div className="col-md-6 mb-2">
                                       <label className="form-label">
-                                        Brand:
+                                        Description:
                                       </label>
                                       <Field
-                                        as="select"
-                                        className="form-select"
-                                        name={`items.${index}.slideShowBrand`}
-                                      >
-                                        <option value="">Select brand</option>
-                                        {brands.map((brand, brandIndex) => (
-                                          <option
-                                            key={brandIndex}
-                                            value={brand.id}
-                                          >
-                                            {brand.name}
-                                          </option>
-                                        ))}
-                                      </Field>
-                                    </div>
-                                  </div>
-
-                                  <div className="mt-2">
-                                    <label className="form-label">Link:</label>
-                                    {/* <Field type="text" name={`slideshowItems.${index}.link`} /> */}
-                                  </div>
-                                  <div className="d-flex">
-                                    <div className="col-md-6 mb-2">
-                                      <label className="form-label">
-                                        Destination:
-                                      </label>
-                                      <Field
-                                        as="select"
-                                        className="form-select"
-                                        name={`items.${index}.destination`}
-                                        onChange={(e) => {
-                                          handleDestinationChange(e);
-                                          setFieldValue(
-                                            `items.${index}.destination`,
-                                            e.target.value
-                                          );
-                                        }}
-                                      >
-                                        <option value="">
-                                          Select Destination
-                                        </option>
-                                        <option value="product">Product</option>
-                                        <option value="brand">Brand</option>
-                                        <option value="category">
-                                          Category
-                                        </option>
-                                      </Field>
-                                    </div>
-                                    <div className="col-md-6 mb-2 ms-4">
-                                      <label className="form-label">ID:</label>
-                                      <Select
-                                        options={destinationOptions}
-                                        value={destinationOptions.find(
-                                          (option) =>
-                                            option.value ===
-                                            (values.items[index]?.id ||
-                                              values.id)
-                                        )}
-                                        onChange={(selectedOption) => {
-                                          handleSelectIdChange(
-                                            `items.${index}.id`,
-                                            selectedOption,
-                                            setFieldValue
-                                          );
-                                          console.log(selectedOption);
-                                        }}
-                                        isSearchable={true}
-                                        placeholder="Select ID"
+                                        as="textarea"
+                                        type="text"
+                                        className="form-control"
+                                        name={`items.${index}.description`}
                                       />
                                     </div>
+                                   
                                   </div>
                                 </div>
                                 <div className="col-md-4 ms-4 mt-2">
@@ -232,4 +174,4 @@ const SlideShowWidget = ({
   );
 };
 
-export default SlideShowWidget;
+export default FeaturedBrand;

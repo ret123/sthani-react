@@ -29,7 +29,7 @@ const Login = () => {
                 "content-type": "application/json",
             },
         });
-        console.log(resp.data);
+        // console.log(resp.data);
 
     }
 

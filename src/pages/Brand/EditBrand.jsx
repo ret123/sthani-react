@@ -36,25 +36,31 @@ const EditBrand = () => {
   };
 
   const fetchBrand = async () => {
-    const res = await dispatch(fetchBrandById({ id })).unwrap();
-    console.log(res)
-
-    setUploadImages(res.images);
-    initialValues.name = res.name;
-    initialValues.description = res.description;
-    initialValues.website = res.website;
-     initialValues.images = [];
-     
+    try {
+      const res = await dispatch(fetchBrandById({ id })).unwrap();
+      console.log(res)
+  
+      setUploadImages(res.images);
+      initialValues.name = res.name;
+      initialValues.description = res.description;
+      initialValues.website = res.website;
+       initialValues.images = [];
+       
+    } catch(err) {
+      throw err
+    }
+ 
 
     // setFilteredCategories(res);
   };
 
-  //  const imageBaseUrl = "http://localhost:3500/uploads/";
+    // const imageBaseUrl = "http://localhost:3500/api/uploads/";
   // const imageBaseUrl = "http://165.22.222.184/api/uploads/";
   // const imageBaseUrl = "https://64.227.162.145/api/uploads/";
   
-  const imageBaseUrl = `${process.env.REACT_APP_API_URL}/api/uploads/`;
-  useEffect(() => {
+   const imageBaseUrl = `${process.env.REACT_APP_API_URL}/api/uploads/`;
+  
+   useEffect(() => {
     fetchBrand();
   }, [dispatch]);
 

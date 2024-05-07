@@ -21,6 +21,7 @@ const MultiSelectDropdown = ({ options, ...props }) => {
       onBlur={handleBlur}
       value={field.value}
       {...props}
+      required
     />
   );
 };
